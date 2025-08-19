@@ -1,10 +1,39 @@
 const fs = require('fs');
 
-fs.readdir('./test', (error, files) => {
-    files.forEach(file => {
-        console.log('name: ' + file);
-    });
+const format = require("node.date-time");
+
+function logTime()
+{
+    return new Date().format("Y-M-d H:M:S") + ' ';
+}
+
+// With callback (asynchronous)
+fs.appendFile('readme.log', logTime() + 'hahahaha' + '\n', (err) => {
+    if (err) throw err;
+    console.log('Data was appended to file');
 });
+
+// // Or using promises (Node.js 10+)
+// fs.promises.appendFile('file.txt', 'data to append')
+//   .then(() => console.log('Data was appended to file'))
+//   .catch(err => console.error(err));
+
+// // Or with async/await
+// async function appendData() {
+//   try {
+//     await fs.promises.appendFile('file.txt', 'data to append');
+//     console.log('Data was appended to file');
+//   } catch (err) {
+//     console.error(err);
+//   }
+// }
+// appendData();
+
+// fs.readdir('./test', (error, files) => {
+//     files.forEach(file => {
+//         console.log('name: ' + file);
+//     });
+// });
 
 // fs.rmdir("test", function(error)
 // {
