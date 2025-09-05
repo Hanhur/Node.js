@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const { title } = require('process');
 
 const homeRoutes = require('./routes/home');
 const carRoutes = require('./routes/card');
@@ -19,7 +18,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 
 // Routers
