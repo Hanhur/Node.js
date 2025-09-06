@@ -8,12 +8,22 @@ const carRoutes = require('./routes/card');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 
+require('dotenv').config();
+
 const app = express();
 
 const hbs = exphbs.create({
+    handlebars: require('handlebars'),
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true
+    },
     defaultLayout: 'main',
     extname: 'hbs'
 });
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
@@ -31,20 +41,16 @@ app.use('/card', carRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-async function start() 
-{
-    try{
-        const url = `mongodb+srv://Mango:nE2ZFBZREBbK3xsu@cluster0.qbdnx7h.mongodb.net/shop`;
-
-        await mongoose.connect(url, { useNewUrlParser: true });
-        console.log('Connected to MongoDB successfully');
+async function start() {
+    try {
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log('✅ MongoDB connected successfully');
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
-    } catch(error)
-    {
-        console.error('Connection error:', error);
+    } catch (error) {
+        console.error('❌ MongoDB connection error:', error.message);
     }
 }
 
