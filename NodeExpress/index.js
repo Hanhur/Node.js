@@ -16,6 +16,7 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 
 app.use(express.static("public"));
+app.use(express.urlencoded({extended: true}));
 
 app.use("/", homeRoutes);
 app.use("/add", addRoutes);
@@ -25,5 +26,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-// Полное руководство Node.JS. Урок 25. Обработка формы
